@@ -14,15 +14,17 @@ import {
     eliminarSuperheroePorIdController,
     eliminarSuperheroePorNombreController
 } from '../controllers/superheroesController.mjs';
+import {superheroeValidations, nombreParamValidation,idParamValidation} from '../validations/superheroesValidations.mjs';
+import { validate } from '../validations/validationmiddleware.mjs';
 
 const router = express.Router();
 
 router.get('/heroes', obtenerTodosLosSuperheroesController);
 router.get('/heroes/:id', obtenerSuperheroePorIdController);
 router.get('/heroes/buscar/:atributo/:valor', buscarSuperheroesPorAtributoController);
-router.post('/heroes', crearSuperheroeController);
-router.put('/heroes/id/:id', actualizarSuperheroeController);
-router.delete('/heroes/id/:id', eliminarSuperheroePorIdController);
-router.delete('/heroes/nombre/:nombre', eliminarSuperheroePorNombreController);
+router.post('/heroes', superheroeValidations, validate, crearSuperheroeController);
+router.put('/heroes/id/:id', [...idParamValidation, ...superheroeValidations], validate,actualizarSuperheroeController);
+router.delete('/heroes/id/:id', idParamValidation, validate, eliminarSuperheroePorIdController);
+router.delete('/heroes/nombre/:nombre', nombreParamValidation, validate, eliminarSuperheroePorNombreController);
 
 export default router;

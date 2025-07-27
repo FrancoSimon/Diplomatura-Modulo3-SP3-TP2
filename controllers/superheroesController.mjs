@@ -20,6 +20,10 @@ import {
   renderizarListaSuperheroes,
 } from "../views/responseView.mjs";
 
+//import { validate } from '../validations/validationmiddleware.mjs';
+
+
+
 //GET obtener un superheroe por ID 
 export async function obtenerSuperheroePorIdController(req, res) {
   try {
@@ -86,6 +90,11 @@ export async function buscarSuperheroesPorAtributoController(req, res) {
 export async function crearSuperheroeController(req, res) {
   try {
     const nuevoSuperheroe = req.body;
+    // // Limpiar los datos antes de guardarlos -- esta opcion es porque no me funciono en las validaciones. consultar!!!
+    nuevoSuperheroe.nombreSuperheroe = nuevoSuperheroe.nombreSuperheroe?.trim();
+    nuevoSuperheroe.nombreReal = nuevoSuperheroe.nombreReal?.trim();
+    nuevoSuperheroe.poderes = nuevoSuperheroe.poderes?.map(poder => poder.trim());
+
     const superheroeCreado = await crearSuperHeroes(nuevoSuperheroe);
     
     const superheroeFormateado = renderizarSuperheroe(superheroeCreado);

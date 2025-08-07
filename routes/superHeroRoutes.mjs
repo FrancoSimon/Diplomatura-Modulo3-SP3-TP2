@@ -23,7 +23,7 @@ router.get('/heroes', obtenerTodosLosSuperheroesController);
 router.get('/heroes/:id', obtenerSuperheroePorIdController);
 router.get('/heroes/buscar/:atributo/:valor', buscarSuperheroesPorAtributoController);
 router.post('/heroes', superheroeValidations, validate, crearSuperheroeController);
-router.put('/heroes/id/:id', [...idParamValidation, ...superheroeValidations], validate,actualizarSuperheroeController);
+router.put('/heroes/id/:id', idParamValidation, validate,actualizarSuperheroeController); //en ela caso que valide todos los campos  [...idParamValidation, ...superheroeValidations]
 router.delete('/heroes/id/:id', idParamValidation, validate, eliminarSuperheroePorIdController);
 router.delete('/heroes/nombre/:nombre', nombreParamValidation, validate, eliminarSuperheroePorNombreController);
 
